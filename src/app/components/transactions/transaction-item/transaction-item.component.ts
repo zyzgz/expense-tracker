@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { Transaction } from '../transaction.service';
+import { Transaction } from '../../../transactions-module/transaction.interface';
 
 @Component({
   selector: 'app-transaction-item',

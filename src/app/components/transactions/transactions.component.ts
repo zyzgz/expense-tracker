@@ -5,15 +5,17 @@ import { CardModule } from 'primeng/card';
 import { TransactionItemComponent } from './transaction-item/transaction-item.component';
 import { TransactionFormComponent } from './transaction-form/transaction-form.component';
 import { DialogService } from 'primeng/dynamicdialog';
-import { Category, CategoryService } from '../../services/category.service';
+import { CategoryService } from '../../categories-module/category.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataViewModule } from 'primeng/dataview';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import { Transaction, TransactionService } from './transaction.service';
+import { TransactionService } from '../../transactions-module/transaction.service';
 import { BehaviorSubject, combineLatest, map, startWith } from 'rxjs';
+import { Category } from '../../categories-module/category.interface';
+import { Transaction } from '../../transactions-module/transaction.interface';
 
 @Component({
   selector: 'app-transactions',

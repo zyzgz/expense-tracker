@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { ChartData } from 'chart.js';
-import { TransactionService } from '../transactions/transaction.service';
+import { TransactionService } from '../../transactions-module/transaction.service';
 import { Observable, map, startWith } from 'rxjs';
 import { CommonModule } from '@angular/common';
 

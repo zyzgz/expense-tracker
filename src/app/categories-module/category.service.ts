@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PrimeIcons } from 'primeng/api';
-import { BehaviorSubject, Observable } from 'rxjs';
-
-export interface Category {
-  id: string;
-  name: string;
-  icon: PrimeIcons;
-}
+import { Category } from './category.interface';
 
 const CATEGORIES: Category[] = [
   {

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
-import { TransactionService } from '../transactions/transaction.service';
+import { TransactionService } from '../../transactions-module/transaction.service';
 import { Observable, map, startWith } from 'rxjs';
 
 @Component({

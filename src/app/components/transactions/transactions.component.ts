@@ -42,14 +42,14 @@ export class TransactionsComponent {
   private readonly transactionService = inject(TransactionService);
   private readonly categoryService = inject(CategoryService);
 
-  transactions$ = this.transactionService.getTransactions();
+  private _transactions$ = this.transactionService.getTransactions();
   categories = this.categoryService.getCategories();
   private _selectedCategory$ = new BehaviorSubject<Category | null>(null);
   selectedCategory: Category | null = null;
   searchTerm = new FormControl('');
 
   filteredTransactions$ = combineLatest([
-    this.transactions$,
+    this._transactions$,
     this._selectedCategory$,
     this.searchTerm.valueChanges.pipe(startWith('')),
   ]).pipe(
@@ -75,6 +75,8 @@ export class TransactionsComponent {
       closable: true,
       width: '400px',
       position: 'top',
+      draggable: true,
+      keepInViewport: true,
       data: {
         transaction,
       },

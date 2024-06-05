@@ -26,7 +26,6 @@ import { TransactionService, TransactionType, Transaction } from '../transaction
     DropdownModule,
   ],
   templateUrl: './transaction-form.component.html',
-  styleUrl: './transaction-form.component.scss',
 })
 export class TransactionFormComponent implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);

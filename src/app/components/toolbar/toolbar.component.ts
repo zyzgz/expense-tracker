@@ -7,6 +7,5 @@ import { ToolbarModule } from 'primeng/toolbar';
   standalone: true,
   imports: [ToolbarModule, AvatarModule],
   templateUrl: './toolbar.component.html',
-  styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent {}

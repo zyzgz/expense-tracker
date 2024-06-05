@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CardModule, ChartModule, CommonModule],
   templateUrl: './statistics.component.html',
-  styleUrl: './statistics.component.scss',
 })
 export class StatisticsComponent {
   private readonly transactionService = inject(TransactionService);

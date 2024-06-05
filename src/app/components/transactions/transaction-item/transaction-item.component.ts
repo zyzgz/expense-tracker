@@ -11,7 +11,6 @@ import { Transaction } from '../transaction.service';
   standalone: true,
   imports: [AvatarModule, ButtonModule, CommonModule, MenuModule],
   templateUrl: './transaction-item.component.html',
-  styleUrl: './transaction-item.component.scss',
 })
 export class TransactionItemComponent {
   @Input({ required: true })

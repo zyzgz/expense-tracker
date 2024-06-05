@@ -18,7 +18,6 @@ import { BalanceComponent } from './components/balance/balance.component';
   ],
   providers: [DialogService],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   private readonly primengConfig = inject(PrimeNGConfig);

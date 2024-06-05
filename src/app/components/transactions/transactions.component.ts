@@ -34,7 +34,6 @@ import { BehaviorSubject, combineLatest, map, startWith } from 'rxjs';
   ],
   providers: [DialogService],
   templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.scss',
 })
 export class TransactionsComponent {
   private readonly dialogService = inject(DialogService);

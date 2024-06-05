@@ -9,7 +9,6 @@ import { Observable, map, startWith } from 'rxjs';
   standalone: true,
   imports: [CommonModule, CardModule],
   templateUrl: './balance.component.html',
-  styleUrl: './balance.component.scss',
 })
 export class BalanceComponent {
   private readonly transactionService = inject(TransactionService);

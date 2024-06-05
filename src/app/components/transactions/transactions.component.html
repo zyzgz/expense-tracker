@@ -1,0 +1,34 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="px-4">
+      <div class="flex justify-content-between align-items-center">
+        <h3>Transactions</h3>
+        <p-button
+          label="Add Transaction"
+          icon="pi pi-plus"
+          class="p-button-success"
+          (onClick)="addTransaction()"></p-button>
+      </div>
+      <p-dropdown
+        [options]="(categoryService.getCategories() | async)!"
+        [(ngModel)]="selectedCategory"
+        [showClear]="true"
+        optionLabel="name"
+        placeholder="Select a Category"
+        (onChange)="filterTransactionsByCategory()"></p-dropdown>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="content">
+    <p-dataView #dv [value]="filteredTransactions" [rows]="10" [paginator]="true">
+      <ng-template pTemplate="list" let-filteredTransactions>
+        <div *ngFor="let transaction of filteredTransactions; let first = first">
+          <app-transaction-item
+            [transaction]="transaction"
+            (editTransaction)="editTransaction($event)"
+            (deleteTransaction)="removeTransaction($event)" />
+        </div>
+      </ng-template>
+    </p-dataView>
+  </ng-template>
+</p-card>

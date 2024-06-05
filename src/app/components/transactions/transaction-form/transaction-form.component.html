@@ -1,0 +1,51 @@
+<form
+  [formGroup]="transactionForm"
+  (ngSubmit)="onSubmit()"
+  class="formgrid grid">
+  <div class="field flex justify-content-center w-full">
+    <p-selectButton
+      [options]="transactionTypes"
+      formControlName="type"
+      optionLabel="label"
+      optionValue="value"></p-selectButton>
+  </div>
+
+  <div class="field col-12 p-fluid">
+    <label for="name">Name</label>
+    <input pInputText type="text" id="name" formControlName="name" />
+  </div>
+
+  <div class="field col-12 p-fluid">
+    <label for="category">Category</label>
+    @if (categoryService.getCategories() | async; as categories) {
+    <p-dropdown
+      [options]="categories"
+      formControlName="category"
+      optionLabel="name"
+      placeholder="Select a Category"></p-dropdown>
+    }
+  </div>
+
+  <div class="field col-12 p-fluid">
+    <label for="amount">Amount</label>
+    <p-inputNumber
+      inputId="amount"
+      formControlName="amount"
+      mode="currency"
+      currency="USD"
+      locale="en-US"></p-inputNumber>
+  </div>
+
+  <div class="field col-12 p-fluid">
+    <label for="date">Date</label>
+    <p-calendar
+      id="date"
+      formControlName="date"
+      [iconDisplay]="'input'"
+      [showIcon]="true"
+      appendTo="body"
+      dateFormat="dd MM yy"></p-calendar>
+  </div>
+
+  <p-button type="submit" class="px-2">Submit</p-button>
+</form>

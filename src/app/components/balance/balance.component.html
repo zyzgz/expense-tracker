@@ -1,0 +1,13 @@
+<p-card>
+  <ng-template pTemplate="header"
+    ><div class="px-4"><h3>Current Balance</h3></div></ng-template
+  >
+
+  <ng-template pTemplate="content">
+    <div class="flex justify-content-center">
+      <p class="font-bold text-6xl text-900">
+        {{ balance$ | async | currency }}
+      </p>
+    </div>
+  </ng-template>
+</p-card>

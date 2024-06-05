@@ -1,0 +1,14 @@
+<p-card>
+  <ng-template pTemplate="header"
+    ><div class="px-4"><h3>Expense Statistics</h3></div></ng-template
+  >
+  <ng-template pTemplate="content">
+    <div class="flex justify-content-center">
+      @if (!isDataEmpty) {
+      <p-chart type="doughnut" [data]="data"></p-chart>
+      } @else {
+      <div>No data available</div>
+      }
+    </div>
+  </ng-template>
+</p-card>

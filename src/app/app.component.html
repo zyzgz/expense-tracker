@@ -4,20 +4,16 @@
       <app-toolbar />
     </div>
 
-    @if (transactionService.getTransactions() | async; as transactions) {
     <div class="col-6 p-0">
       <div class="col-12">
-        <app-balance [transactions]="transactions" />
+        <app-balance />
       </div>
-
       <div class="col-12">
-        <app-statistics [transactions]="transactions" />
+        <app-statistics />
       </div>
     </div>
-
     <div class="col-6">
-      <app-transactions [transactions]="transactions" />
+      <app-transactions />
     </div>
-    }
   </div>
 </div>

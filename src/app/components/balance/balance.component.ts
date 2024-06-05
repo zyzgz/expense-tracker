@@ -1,8 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { Transaction } from '../../services/transaction.service';
-import { Observable, map, of } from 'rxjs';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
+import { TransactionService } from '../transactions/transaction.service';
 
 @Component({
   selector: 'app-balance',
@@ -12,17 +11,17 @@ import { CardModule } from 'primeng/card';
   styleUrl: './balance.component.scss',
 })
 export class BalanceComponent {
-  @Input()
-  set transactions(value: Transaction[]) {
-    this.balance$ = of(value).pipe(
-      map(transactions =>
-        transactions.reduce((acc, transaction) => {
-          return transaction.type === 'income'
-            ? acc + transaction.amount
-            : acc - transaction.amount;
-        }, 0)
-      )
-    );
+  private readonly transactionService = inject(TransactionService);
+
+  balance = 0;
+
+  constructor() {
+    this.transactionService.getTransactions().subscribe(transactions => {
+      this.balance = transactions
+        .map(transaction => {
+          return transaction.type === 'income' ? transaction.amount : -transaction.amount;
+        })
+        .reduce((acc, amount) => acc + amount, 0);
+    });
   }
-  balance$: Observable<number> = of(0);
 }

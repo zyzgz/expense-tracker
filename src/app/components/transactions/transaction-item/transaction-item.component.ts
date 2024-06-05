@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
-import { Transaction } from '../../../services/transaction.service';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { Transaction } from '../transaction.service';
 
 @Component({
   selector: 'app-transaction-item',

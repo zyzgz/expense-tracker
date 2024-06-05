@@ -6,15 +6,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import {
-  Transaction,
-  TransactionService,
-  TransactionType,
-} from '../../../services/transaction.service';
 import { Category, CategoryService } from '../../../services/category.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { CommonModule } from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
+import { TransactionService, TransactionType, Transaction } from '../transaction.service';
 
 @Component({
   selector: 'app-transaction-form',

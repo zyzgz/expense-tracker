@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Category } from './category.service';
+import { Category } from '../../services/category.service';
 
 export enum TransactionType {
   INCOME = 'income',

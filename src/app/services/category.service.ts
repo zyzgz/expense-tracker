@@ -35,9 +35,9 @@ const CATEGORIES: Category[] = [
   providedIn: 'root',
 })
 export class CategoryService {
-  private _categories$ = new BehaviorSubject<Category[]>(CATEGORIES);
+  private _categories = CATEGORIES;
 
-  getCategories(): Observable<Category[]> {
-    return this._categories$.asObservable();
+  getCategories(): Category[] {
+    return this._categories;
   }
 }

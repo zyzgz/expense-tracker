@@ -1,28 +1,23 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { ChartData } from 'chart.js';
 import { TransactionService } from '../transactions/transaction.service';
+import { Observable, map, startWith } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-statistics',
   standalone: true,
-  imports: [CardModule, ChartModule],
+  imports: [CardModule, ChartModule, CommonModule],
   templateUrl: './statistics.component.html',
   styleUrl: './statistics.component.scss',
 })
-export class StatisticsComponent implements OnInit {
+export class StatisticsComponent {
   private readonly transactionService = inject(TransactionService);
 
-  isDataEmpty = true;
-  data?: ChartData;
-
-  ngOnInit(): void {
-    this.initTransactions();
-  }
-
-  private initTransactions(): void {
-    this.transactionService.getTransactions().subscribe(transactions => {
+  data$: Observable<ChartData> = this.transactionService.getTransactions().pipe(
+    map(transactions => {
       const categories = transactions
         .filter(transaction => transaction.type !== 'income')
         .reduce((acc, transaction) => {
@@ -31,20 +26,22 @@ export class StatisticsComponent implements OnInit {
           return acc;
         }, {} as { [key: string]: number });
 
-      if (Object.keys(categories).length === 0) {
-        this.isDataEmpty = true;
-      } else {
-        this.isDataEmpty = false;
-      }
-
-      this.data = {
-        labels: Object.keys(categories || {}),
+      return {
+        labels: Object.keys(categories),
         datasets: [
           {
-            data: Object.values(categories || {}),
+            data: Object.values(categories),
           },
         ],
       };
-    });
-  }
+    }),
+    startWith({
+      labels: [],
+      datasets: [
+        {
+          data: [],
+        },
+      ],
+    })
+  );
 }

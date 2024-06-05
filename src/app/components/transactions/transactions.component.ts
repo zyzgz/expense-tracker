@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TransactionItemComponent } from './transaction-item/transaction-item.component';
@@ -7,12 +7,13 @@ import { TransactionFormComponent } from './transaction-form/transaction-form.co
 import { DialogService } from 'primeng/dynamicdialog';
 import { Category, CategoryService } from '../../services/category.service';
 import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataViewModule } from 'primeng/dataview';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { Transaction, TransactionService } from './transaction.service';
+import { BehaviorSubject, combineLatest, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-transactions',
@@ -29,56 +30,40 @@ import { Transaction, TransactionService } from './transaction.service';
     InputTextModule,
     IconFieldModule,
     InputIconModule,
+    ReactiveFormsModule,
   ],
   providers: [DialogService],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss',
 })
-export class TransactionsComponent implements OnInit {
+export class TransactionsComponent {
   private readonly dialogService = inject(DialogService);
   private readonly transactionService = inject(TransactionService);
   private readonly categoryService = inject(CategoryService);
 
-  transactions: Transaction[] = [];
-  categories: Category[] = [];
+  transactions$ = this.transactionService.getTransactions();
+  categories = this.categoryService.getCategories();
+  private _selectedCategory$ = new BehaviorSubject<Category | null>(null);
   selectedCategory: Category | null = null;
-  filteredTransactions: Transaction[] = [];
-  searchTerm: string = '';
+  searchTerm = new FormControl('');
 
-  ngOnInit(): void {
-    this.initCategories();
-    this.initTransactions();
-  }
+  filteredTransactions$ = combineLatest([
+    this.transactions$,
+    this._selectedCategory$,
+    this.searchTerm.valueChanges.pipe(startWith('')),
+  ]).pipe(
+    map(([transactions, selectedCategory, searchTerm]) => {
+      return transactions
+        .filter(transaction => !selectedCategory || transaction.category.id === selectedCategory.id)
+        .filter(
+          transaction =>
+            !searchTerm || transaction.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    })
+  );
 
-  private initTransactions(): void {
-    this.transactionService.getTransactions().subscribe(transactions => {
-      this.transactions = transactions;
-      this.filterTransactionsByCategory();
-    });
-  }
-
-  private initCategories(): void {
-    this.categoryService.getCategories().subscribe(categories => (this.categories = categories));
-  }
-
-  filterTransactionsByCategory(): void {
-    if (this.selectedCategory) {
-      this.filteredTransactions = this.transactions.filter(
-        transaction => transaction.category.id === this.selectedCategory!.id
-      );
-    } else {
-      this.filteredTransactions = this.transactions;
-    }
-  }
-
-  filterTransactionsBySearchTerm(): void {
-    if (this.searchTerm) {
-      this.filteredTransactions = this.transactions.filter(transaction =>
-        transaction.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    } else {
-      this.filteredTransactions = this.transactions;
-    }
+  selectCategory(): void {
+    this._selectedCategory$.next(this.selectedCategory);
   }
 
   private openTransactionForm(header: string, transaction?: Transaction): void {

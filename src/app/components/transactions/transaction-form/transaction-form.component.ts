@@ -33,7 +33,7 @@ export class TransactionFormComponent implements OnInit {
   private readonly ref = inject(DynamicDialogRef);
   private readonly transactionService = inject(TransactionService);
   private readonly config = inject(DynamicDialogConfig);
-  categoryService = inject(CategoryService);
+  private readonly categoryService = inject(CategoryService);
 
   transactionForm = this.fb.group({
     type: [TransactionType.INCOME, Validators.required],
@@ -47,6 +47,7 @@ export class TransactionFormComponent implements OnInit {
     { label: 'Expense', value: TransactionType.EXPENSE },
   ];
   isEditForm = false;
+  categories = this.categoryService.getCategories();
 
   ngOnInit(): void {
     this.isEditForm = !!this.config.data?.transaction;

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { TransactionService } from '../transactions/transaction.service';
+import { Observable, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-balance',
@@ -13,15 +14,14 @@ import { TransactionService } from '../transactions/transaction.service';
 export class BalanceComponent {
   private readonly transactionService = inject(TransactionService);
 
-  balance = 0;
-
-  constructor() {
-    this.transactionService.getTransactions().subscribe(transactions => {
-      this.balance = transactions
-        .map(transaction => {
-          return transaction.type === 'income' ? transaction.amount : -transaction.amount;
-        })
-        .reduce((acc, amount) => acc + amount, 0);
-    });
-  }
+  balance$: Observable<number> = this.transactionService.getTransactions().pipe(
+    map(transactions =>
+      transactions
+        .map(transaction =>
+          transaction.type === 'income' ? transaction.amount : -transaction.amount
+        )
+        .reduce((acc, amount) => acc + amount, 0)
+    ),
+    startWith(0)
+  );
 }

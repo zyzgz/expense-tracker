@@ -15,11 +15,7 @@
             <p-inputIcon>
               <i class="pi pi-search"></i>
             </p-inputIcon>
-            <input
-              pInputText
-              [(ngModel)]="searchTerm"
-              placeholder="Search..."
-              (input)="filterTransactionsBySearchTerm()" />
+            <input pInputText [formControl]="searchTerm" placeholder="Search..." />
           </p-iconField>
         </div>
         <p-dropdown
@@ -28,11 +24,12 @@
           [showClear]="true"
           optionLabel="name"
           placeholder="Select a Category"
-          (onChange)="filterTransactionsByCategory()"></p-dropdown>
+          (onChange)="selectCategory()"></p-dropdown>
       </div>
     </div>
   </ng-template>
   <ng-template pTemplate="content">
+    @if (filteredTransactions$ | async; as filteredTransactions) {
     <p-dataView [value]="filteredTransactions" [rows]="10" [paginator]="true">
       <ng-template pTemplate="list" let-filteredTransactions>
         @for (transaction of filteredTransactions; track $index) {
@@ -44,5 +41,6 @@
         }
       </ng-template>
     </p-dataView>
+    }
   </ng-template>
 </p-card>

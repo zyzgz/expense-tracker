@@ -6,7 +6,7 @@
   <ng-template pTemplate="content">
     <div class="flex justify-content-center">
       <p class="font-bold text-6xl text-900">
-        {{ balance | currency }}
+        {{ balance$ | async | currency }}
       </p>
     </div>
   </ng-template>
